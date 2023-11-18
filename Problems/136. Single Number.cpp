@@ -8,7 +8,7 @@ using namespace std;
 //Solution 01
 /*
     //Time Complexity: O(N)
-    //Space Complexity: O(N)
+    //Space Complexity: O(NlogN)
     int singleNumber(vector<int>& nums) {
         map <int, int> occ;
         for (int val : nums) {
