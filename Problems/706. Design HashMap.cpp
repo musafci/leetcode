@@ -1,5 +1,10 @@
 // Problem: https://leetcode.com/problems/design-hashmap/
 
+/**
+ * Time complexity: O(1) for put, get, and remove.
+ * Space Complexity: O(1) for put, get, and remove.
+*/
+
 class MyHashMap {
 private:
     class Node {
