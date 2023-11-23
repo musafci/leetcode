@@ -1,8 +1,8 @@
 // Problem: https://leetcode.com/problems/isomorphic-strings/description/
 
 /**
- * Time complexity:
- * Space Complexity:
+ * Time complexity: O(n), where n is the length of s and t
+ * Space Complexity: O(min(s, t)) where s and t are the lengths of the strings.
 */
 
 class Solution {
