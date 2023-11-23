@@ -1,5 +1,10 @@
 // Problem: https://leetcode.com/problems/lru-cache/description/
 
+/**
+ * Time complexity: O(1) for get() and put()
+ * Space Complexity: O(C) where C is the capacity
+*/
+
 class LRUCache {
 public:
     LRUCache(int capacity) {
