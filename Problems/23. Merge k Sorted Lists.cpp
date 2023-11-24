@@ -1,5 +1,3 @@
-// Problem: https://leetcode.com/problems/merge-k-sorted-lists/description/
-
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -10,43 +8,48 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
-
-/**
- * Time Complexity : 
- * Space Complexity : 
-*/
-
 class Solution {
 public:
-    void addRear(ListNode*& dummyHead, int val) {
-        ListNode* newNode = new ListNode(val);
-        dummyHead->next = newNode;
-        dummyHead = dummyHead->next;
-    }
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2, ListNode*& dummyHead) {
-        while (list1 && list2) {
-            if (list1->val < list2->val) {
-                addRear(dummyHead, list1->val);
-                list1 = list1->next;
-            } else {
-                addRear(dummyHead, list2->val);
-                list2 = list2->next;
-            }
-        }
-
-        if (list1) {
-            dummyHead->next = list1;
-        } else {
-            dummyHead->next = list2;
-        }
-        return dummyHead;
-    }
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
+    // TC: O(NlogK), where K = total number of linked lists, N = total number of elements in K lists
+    // MC: O(NlogK)
+    ListNode* mergeTwoLists(ListNode* left, ListNode* right) {
         ListNode* dummyHead = new ListNode(0);
-        for (int i = 0; i < lists.size(); i++) {
-            mergeTwoLists(dummyHead->next, lists[i], dummyHead);
+        ListNode* copyHead = dummyHead;
+        
+        while(left and right) {
+            int vleft = left -> val;
+            int vright = right -> val;
+            dummyHead -> next = vleft < vright ? new ListNode(vleft) : new ListNode(vright);
+            left = vleft < vright ? left -> next : left;
+            right = vleft < vright ? right : right -> next;
+            dummyHead = dummyHead -> next;
         }
-        return dummyHead->next;
+        
+        while(left) {
+            dummyHead -> next = new ListNode(left -> val);
+            dummyHead = dummyHead -> next;
+            left = left -> next;
+        }
+        
+        while(right) {
+            dummyHead -> next = new ListNode(right -> val);
+            dummyHead = dummyHead -> next;
+            right = right -> next;
+        }
+        
+        return copyHead -> next;
+    }
+    
+    ListNode* helper(int L, int R, vector<ListNode*>& lists) {
+        if (L > R) return NULL;
+        if (L == R) return lists[L];
+        int M = (L + R) / 2;
+        auto left = helper(L, M, lists);
+        auto right = helper(M + 1, R, lists);
+        return mergeTwoLists(left, right);
+    }
+    
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        return helper(0, lists.size() - 1, lists);
     }
 };
